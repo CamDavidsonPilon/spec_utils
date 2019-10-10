@@ -5,10 +5,21 @@ from utils import *
 from plotting import *
 
 
-df_h = eem_dat_file_to_df("~/Downloads/HotSauceH_trial2_EEM.dat")
-df_ch = eem_dat_file_to_df("~/Downloads/HotSauceCH_trial2_EEM.dat")
-# df_partial_h = eem_dat_file_to_df("~/Downloads/attachments (3)/HotSauceH_trial1_EEM.dat")
+df_first_trial = eem_dat_file_to_df("~/Downloads/HotSauceCH_trial2_EEM.dat")
+df_second_trial = eem_dat_file_to_df(
+    "~/Downloads/attachments (4)/HotSauceH_trial3_EEM.dat"
+)
 
-eem_heatmap(df_ch, rayleigh_scattering_mask_width=30)
-eem_heatmap(df_ch, rayleigh_scattering_mask_width=30, log_scale=True)
-eem_heatmap(df_h, rayleigh_scattering_mask_width=30, additional_mask=block_mask(df_h, "top" ,0.25))
+eem_heatmap(df_first_trial, rayleigh_scattering_mask_width=25)
+
+
+df_dw = eem_dat_file_to_df("~/Downloads/attachments (4)/HotSauceDW_trial3_EEM.dat")
+df_second_trial_with_blank = eem_dat_file_to_df(
+    "~/Downloads/attachments (4)/HotSauceH_w_blank_trial3_EEM.dat"
+)
+
+
+eem_heatmap(
+    df_second_trial_with_blank, rayleigh_scattering_mask_width=25, log_scale=True
+)
+eem_heatmap(df_second_trial, rayleigh_scattering_mask_width=25, log_scale=True)
