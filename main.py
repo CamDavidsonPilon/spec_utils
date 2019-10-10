@@ -7,6 +7,7 @@ from plotting import *
 
 df_h = eem_dat_file_to_df("~/Downloads/HotSauceH_trial2_EEM.dat")
 df_ch = eem_dat_file_to_df("~/Downloads/HotSauceCH_trial2_EEM.dat")
+# df_partial_h = eem_dat_file_to_df("~/Downloads/attachments (3)/HotSauceH_trial1_EEM.dat")
 
 eem_heatmap(df_ch, rayleigh_scattering_mask_width=30)
 eem_heatmap(df_ch, rayleigh_scattering_mask_width=30, log_scale=True)
