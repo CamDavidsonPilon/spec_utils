@@ -60,15 +60,15 @@ def upper_tri_mask(df):
     emissions = df.columns.values
     excitations = df.index.values
 
-    mask = np.greater.outer(emissions, excitations)
+    mask = np.greater.outer(excitations, emissions)
     return mask
 
 
 def water_raman_scattering_mask(df, mask_width=5):
 
-    WATER_RAMAN_SHIFT = 1 / 3500.0
-    excitations = df.index.values
+    WATER_RAMAN_SHIFT = np.exp(-(np.log(3400) + np.log(3600)) / 2)
     emissions = df.columns.values
+    excitations = df.index.values
     sorter = np.argsort(emissions)
 
     mask = np.zeros_like(df, dtype=bool)

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from skimage.feature import peak_local_max
 import numpy as np
-from utils import rayleigh_scattering_mask, upper_tri_mask
+from utils import rayleigh_scattering_mask, upper_tri_mask, water_raman_scattering_mask
 
 sns.set()
 
@@ -36,7 +36,9 @@ def eem_heatmap(
     mask = np.zeros_like(df, dtype=bool)
 
     mask |= rayleigh_scattering_mask(df, rayleigh_scattering_mask_width)
-    mask |= water_raman_scattering_mask(df, raman_scattering_mask_width)
+
+    if raman_scattering_mask_width > 0:
+        mask |= water_raman_scattering_mask(df, raman_scattering_mask_width)
 
     if remove_upper_tri:
         mask |= upper_tri_mask(df)
@@ -47,7 +49,7 @@ def eem_heatmap(
     if log_scale:
         df = np.log(df - df.values[~mask].min() + 1)
 
-    f, ax = plt.subplots(figsize=(9, 6))
+    fig, ax = plt.subplots(figsize=(9, 7))
     ax = sns.heatmap(df, ax=ax, mask=mask, vmax=df.values[~mask].max())
 
     if plot_peaks:
@@ -57,5 +59,5 @@ def eem_heatmap(
         for x, y in coor:
             if not mask[x, y]:
                 ax.scatter(y, x, c="b", s=15, edgecolors="k", linewidths=0.5)
-    plt.show()
-    return ax
+    #plt.show()
+    return fig, ax
