@@ -49,6 +49,7 @@ def eem_heatmap(
     if log_scale:
         df = np.log(df - df.values[~mask].min() + 1)
 
+
     fig, ax = plt.subplots(figsize=(9, 7))
     ax = sns.heatmap(df, ax=ax, mask=mask, vmax=df.values[~mask].max(), cmap="viridis")
 

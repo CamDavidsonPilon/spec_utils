@@ -24,8 +24,9 @@ def eem_dat_file_to_df(filename, verbose=True):
 
     df = df.sort_index(axis=1, ascending=False)
     df = df.sort_index(axis=0, ascending=True)
-
-    return df.T
+    df = df.dropna()
+    df = df.T
+    return df
 
 
 def rayleigh_scattering_mask(df, mask_width=10):

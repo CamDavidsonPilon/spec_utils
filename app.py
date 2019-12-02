@@ -4,13 +4,14 @@ import numpy as np
 import os
 from utils import *
 from plotting import *
+from path import PATH
 
 
 st.title('Excitation-Emission matrix analyzer')
 
 
-def file_selector(folder_path='./sample_data'):
-    filenames = os.listdir(folder_path)
+def file_selector(folder_path=PATH):
+    filenames = [file for file in os.listdir(folder_path) if file.endswith('.dat')]
     selected_filename = st.selectbox('Select a file', filenames)
     return os.path.join(folder_path, selected_filename)
 
@@ -23,7 +24,6 @@ def load_data(filename):
 
 df = load_data(file_selector())
 
-
 if st.checkbox('Show raw data'):
     st.subheader('Raw data')
     st.text('Excitation (rows) by Emissions (cols)')
@@ -31,9 +31,10 @@ if st.checkbox('Show raw data'):
 
 
 st.header("Emission Spectra")
-excitation_selection = st.slider('Excitation wavelength', df.index.min(), df.index.max(), step=1.0)
+excitation_selection = st.slider('Excitation wavelength', df.index.min(), df.index.max(), step=(df.index.max() - df.index.min())/(df.shape[0]-1))
+# TODO: move into plotting module
 fig, ax = plt.subplots(figsize=(9, 7))
-rayleigh_scattering_to_nan(df, 50).loc[excitation_selection].plot(ax=ax)
+rayleigh_scattering_to_nan(df, 20).loc[excitation_selection].plot(ax=ax)
 st.pyplot(fig)
 
 
