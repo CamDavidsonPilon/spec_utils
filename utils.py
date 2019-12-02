@@ -37,6 +37,12 @@ def rayleigh_scattering_mask(df, mask_width=10):
     return mask
 
 
+def rayleigh_scattering_to_nan(df, mask_width=10):
+    df = df.copy()
+    mask = rayleigh_scattering_mask(df, mask_width=mask_width)
+    df.values[mask] = np.nan
+    return df
+
 def block_mask(df, position, fraction):
 
     r, c = df.shape

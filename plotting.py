@@ -50,7 +50,7 @@ def eem_heatmap(
         df = np.log(df - df.values[~mask].min() + 1)
 
     fig, ax = plt.subplots(figsize=(9, 7))
-    ax = sns.heatmap(df, ax=ax, mask=mask, vmax=df.values[~mask].max())
+    ax = sns.heatmap(df, ax=ax, mask=mask, vmax=df.values[~mask].max(), cmap="viridis")
 
     if plot_peaks:
         coor = peak_local_max(

@@ -29,6 +29,15 @@ if st.checkbox('Show raw data'):
     st.text('Excitation (rows) by Emissions (cols)')
     st.write(df)
 
+
+st.header("Emission Spectra")
+excitation_selection = st.slider('Excitation wavelength', df.index.min(), df.index.max(), step=1.0)
+fig, ax = plt.subplots(figsize=(9, 7))
+rayleigh_scattering_to_nan(df, 50).loc[excitation_selection].plot(ax=ax)
+st.pyplot(fig)
+
+
+
 st.header('Heatmap')
 
 mask_ray = st.checkbox('Mask Rayleigh scatter?', value=True)
