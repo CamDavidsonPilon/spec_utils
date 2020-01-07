@@ -17,6 +17,7 @@ def eem_heatmap(
     additional_mask=None,
     plot_peaks=True,
     log_scale=False,
+    title=None
 ):
     """
     df: DataFrame
@@ -52,7 +53,7 @@ def eem_heatmap(
 
     fig, ax = plt.subplots(figsize=(9, 7))
     ax = sns.heatmap(df, ax=ax, mask=mask, vmax=df.values[~mask].max(), cmap="viridis")
-
+    ax.set_title(title)
     if plot_peaks:
         coor = peak_local_max(
             df.values, min_distance=20, exclude_border=True, threshold_rel=0.01
@@ -60,5 +61,4 @@ def eem_heatmap(
         for x, y in coor:
             if not mask[x, y]:
                 ax.scatter(y, x, c="b", s=15, edgecolors="k", linewidths=0.5)
-    #plt.show()
     return fig, ax

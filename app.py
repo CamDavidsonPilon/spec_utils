@@ -5,6 +5,7 @@ import os
 from utils import *
 from plotting import *
 from path import PATH
+from pathlib import Path
 
 
 st.title('Excitation-Emission matrix analyzer')
@@ -21,8 +22,8 @@ def load_data(filename):
     df = eem_dat_file_to_df(filename)
     return df
 
-
-df = load_data(file_selector())
+choosen_file = file_selector()
+df = load_data(choosen_file)
 
 if st.checkbox('Show raw data'):
     st.subheader('Raw data')
@@ -32,10 +33,9 @@ if st.checkbox('Show raw data'):
 
 st.header("Emission Spectra")
 excitation_selection = st.slider('Excitation wavelength', df.index.min(), df.index.max(), step=(df.index.max() - df.index.min())/(df.shape[0]-1))
-# TODO: move into plotting module
-fig, ax = plt.subplots(figsize=(9, 7))
-rayleigh_scattering_to_nan(df, 20).loc[excitation_selection].plot(ax=ax)
-st.pyplot(fig)
+# TODO: move into plotting module. Better: turn into an interactive plot.
+slice_ = rayleigh_scattering_to_nan(df, 20).loc[excitation_selection]
+st.line_chart(slice_)
 
 
 
@@ -52,4 +52,5 @@ st.pyplot(eem_heatmap(df,
     log_scale=log_scale,
     plot_peaks=False,
     remove_upper_tri=remove_upper_tri,
-    )[0])
+    title=Path(choosen_file).name
+    )[0], dpi=200)
