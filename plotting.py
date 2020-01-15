@@ -15,7 +15,7 @@ def eem_heatmap(
     raman_scattering_mask_width=0,
     remove_upper_tri=False,
     additional_mask=None,
-    plot_peaks=True,
+    plot_peaks=False,
     log_scale=False,
     title=None
 ):

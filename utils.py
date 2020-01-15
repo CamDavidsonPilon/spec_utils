@@ -18,8 +18,8 @@ def eem_dat_file_to_df(filename, verbose=True):
 
     df.columns = [np.round(float(s), 1) for s in df.columns]
     df.index = [np.round(s, 1) for s in df.index]
-    df.index.name = "Emission"
-    df.columns.name = "Excitation"
+    df.index.name = "Emission (nm)"
+    df.columns.name = "Excitation (nm)"
     df.filename = filename
 
     df = df.sort_index(axis=1, ascending=False)
